@@ -95,5 +95,49 @@
         
     }
 
-    document.addEventListener('DOMContentLoaded', renderRepos);
+    // Blog function
+    document.addEventListener('DOMContentLoaded', function () {
+        renderRepos(); // Se necessário, mantenha esta função para outras funcionalidades
+
+        const titles = document.querySelectorAll('.blog-item a.d-inline-block.h4');
+
+        titles.forEach(title => {
+            title.addEventListener('click', function (event) {
+                event.preventDefault(); // Evita o comportamento padrão do link
+                const postTitle = this.textContent.trim(); // Título do post
+                let postContent = ''; // Inicializa conteúdo da notícia
+                let readMoreLink = ''; // Inicializa link
+
+                switch (postTitle) {
+                    case 'Secrets Management Tools in Mobile App Development':
+                        postContent = 'In essence, mobile app development’s build and publishing phase requires a dedicated focus on secrets management. By adopting secure practices for handling signing credentials and app store keys, developers can safeguard the integrity of their apps and maintain control over their distribution. This attention to detail ensures that the app reaches its audience through secure, authorized channels, reflecting the overall commitment to security and trustworthiness.';
+                        readMoreLink = 'https://medium.com/dopplerhq/secrets-management-for-mobile-app-development-852029582106'; 
+                        break;
+                    case 'How to Create Quality Figma Design':
+                        postContent = "Creating quality designs in Figma involves understanding design principles and mastering the tool's features. This guide provides essential tips, including the importance of user feedback, effective use of components, and organizing layers for better collaboration. By following these best practices, designers can enhance their workflows and produce visually appealing, user-friendly interfaces.";
+                        readMoreLink = 'https://help.figma.com/hc/en-us/articles/4405328886935--Beginner-2-Create-designs'; 
+                        break;
+                    case 'Tutorials for Learning Development':
+                        postContent = 'Embarking on your coding journey can be exciting and overwhelming. This guide provides a step-by-step approach to learning coding from scratch. It covers choosing the right programming language, leveraging online resources, setting achievable goals, and practicing regularly. With dedication and the right mindset, you can build a solid foundation and unlock new opportunities in the tech world.';
+                        readMoreLink = 'https://daily.dev/blog/beginners-guide-how-to-start-learning-coding-from-scratch'; 
+                        break;
+                    case 'Free Online Websites to Learn Development':
+                        postContent = "Discover the best free resources available online to kickstart your development journey! This guide highlights top websites offering courses, tutorials, and hands-on projects across various programming languages and technologies. Whether you're a complete beginner or looking to enhance your skills, these platforms provide valuable learning opportunities at no cost. Dive in and start building your development skills today!";
+                        readMoreLink = 'https://skillcrush.com/blog/64-online-resources-to-learn-to-code-for-free/'; 
+                        break;
+                    default:
+                        postContent = 'Content not available.';
+                        readMoreLink = ''; 
+                }
+
+                // Modal
+                document.getElementById('newsModalLabel').textContent = postTitle;
+                document.getElementById('modalBody').innerHTML = `${postContent} <br><a href="${readMoreLink}" class="btn btn-primary mt-3" target="_blank">Read More</a>`; // Use backticks here
+
+                const modal = new bootstrap.Modal(document.getElementById('newsModal'));
+                modal.show();
+            });
+        });
+    });
+ 
 })(jQuery);
