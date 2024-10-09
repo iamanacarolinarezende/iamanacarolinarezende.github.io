@@ -45,13 +45,26 @@
         const repos = await fetchGitHubRepos();
         const portfolioContent = document.querySelector('.portfolio-content'); // portfólio section
 
-        // Limpa a mensagem de carregamento
+        // Clear the loading message
         document.getElementById('loading-text').style.display = 'none';
 
+        const repoImages = {
+            'C-ATM-Bank': 'img/CSimpleATM.jpg',
+            'C-Calculator': 'img/CSimpleCalculator.png',
+            'CSharp-Book-Store': 'img/CSharpBookStore.jpg',
+            'reactjs-student-form': 'img/reactForm.jpg',
+            'TechBooksV3.1': 'img/techbooks.jpg',
+            'Unity-DinoPet': 'img/dino.jpg',
+            'Unity-Flappy-Blob': 'img/blop.jpg',
+            'Unity-FeedThePet': 'img/Feed.png',
+        };
+        
         repos.forEach(repo => {
-            const portfolioItem = document.createElement('div');
-            portfolioItem.classList.add('portfolio-item', 'py-5', 'border-bottom');
-
+            if (repo.name !== 'iamanacarolinarezende.github.io') {  
+                const portfolioItem = document.createElement('div');
+                portfolioItem.classList.add('portfolio-item', 'py-5', 'border-bottom');
+                const repoImage = repoImages[repo.name] || 'img/placeholder.jpg';
+        
             portfolioItem.innerHTML = `
                 <div class="row g-4 align-items-center">
                     <div class="col-xl-6">
@@ -62,7 +75,7 @@
                     <div class="col-9 col-xl-4">
                         <div class="portfolio-img">
                             <div class="portfolio-img-inner">
-                                <img src="img/placeholder.jpg" class="img-fluid" alt="Image">
+                                <img src="${repoImage}" class="img-fluid" alt="${repo.name}">
                             </div>
                         </div>
                     </div>
@@ -77,9 +90,10 @@
             `;
             
             portfolioContent.appendChild(portfolioItem);
+            }
         });
+        
     }
 
-    // Chama a função renderRepos quando o DOM estiver completamente carregado
     document.addEventListener('DOMContentLoaded', renderRepos);
 })(jQuery);
